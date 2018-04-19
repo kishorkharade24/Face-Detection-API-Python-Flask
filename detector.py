@@ -25,10 +25,6 @@ def detect_faces(image):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
-    if not faces:
-        data["status"] = "FAILURE"
-        data["message"] = "No faces found"
-
     for (x, y, w, h) in faces:
         cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 3)
         ids, conf = recognizer.predict(gray[y:y+h, x:x+w])
