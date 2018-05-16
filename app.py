@@ -49,7 +49,7 @@ def upload(user_id):
     if request.method == 'POST':
         # check if the POST request has the file part
         if 'file' not in request.files:
-            return "No file part found."
+            return jsonify({'status': "FAILURE", "message": "No file part found."})
     connection = sqlite3.connect('database.db')
     c = connection.cursor()
     c.execute('INSERT INTO users (name) VALUES (?)', (user_id,))
@@ -57,7 +57,7 @@ def upload(user_id):
     count = 0
     for requestFile in request.files.getlist("file"):
         if requestFile.filename == '':
-            return "File not selected."
+            return jsonify({'status': "FAILURE", "message": "File not selected."})
         if requestFile:
             count = count + 1
             filename = "User." + str(uid) + "." + str(count) + ".jpg"
@@ -78,7 +78,7 @@ def detect_face():
     if request.method == 'POST':
         print(request)
         if 'file' not in request.files:
-            return "No file part found."
+            return jsonify({'status': "FAILURE", "message": "No file part found."})
     file = request.files['file']
     filename = secure_filename(file.filename)
     file.save(os.path.join(app.config['DATA_FOLDER'], filename))
