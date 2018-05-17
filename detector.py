@@ -30,7 +30,7 @@ def detect_faces(image):
             cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 3)
             ids, conf = recognizer.predict(gray[y:y+h, x:x+w])
             print("IDS : " + str(ids) + " : Conf : " + str(conf))
-            if conf < 50:
+            if conf < 55:
                 c.execute("select name, emp_id from users where id = (?);", (ids,))
                 result = c.fetchall()
                 print(result)
