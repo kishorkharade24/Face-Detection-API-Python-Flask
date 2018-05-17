@@ -17,7 +17,7 @@ def detect_faces(image):
         connection = sqlite3.connect('database.db')
         c = connection.cursor()
         if not os.path.isfile(trainer):
-            return "Please execute trainer first."
+            return jsonify({"message": "Please execute trainer first.", "status": "FAILURE"})
         face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
         img = cv2.imread(os.path.join("./data", image))
         os.system("rm -rf " + os.path.join("./data", image))
@@ -31,11 +31,11 @@ def detect_faces(image):
             ids, conf = recognizer.predict(gray[y:y+h, x:x+w])
             print("IDS : " + str(ids) + " : Conf : " + str(conf))
             if conf < 50:
-                c.execute("select name from users where id = (?);", (ids,))
+                c.execute("select name, emp_id from users where id = (?);", (ids,))
                 result = c.fetchall()
                 print(result)
                 if result:
-                    data["matches"].append({"id": ids, "name": result[0][0], "confidence": conf})
+                    data["matches"].append({"id": ids, "name": result[0][0], "emp_id": result[0][1], "confidence": conf})
                     data["status"] = "SUCCESS"
             else:
                 data["status"] = "SUCCESS"

@@ -9,7 +9,8 @@ def create_database_schema():
     DROP TABLE IF EXISTS users;
     CREATE TABLE users (
            id integer unique primary key autoincrement,
-           name text
+           name text,
+           emp_id integer
     );
     """
     c.executescript(sql)

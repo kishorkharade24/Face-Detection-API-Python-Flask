@@ -52,7 +52,7 @@ def upload(user_id):
             return jsonify({'status': "FAILURE", "message": "No file part found."})
     connection = sqlite3.connect('database.db')
     c = connection.cursor()
-    c.execute('INSERT INTO users (name) VALUES (?)', (user_id,))
+    c.execute('INSERT INTO users (name, emp_id) VALUES (?1, ?2)', (user_id, int(user_id),))
     uid = c.lastrowid
     count = 0
     for requestFile in request.files.getlist("file"):
