@@ -59,7 +59,7 @@ def up():
         count = 0
         for file in request_data['files']:
             count = count + 1
-            filename = "User." + str(uid) + "." + str(count) + ".png"
+            filename = "User." + str(uid) + "." + str(count) + ".jpg"
             starter = file.find(',')
             image_data = file[starter + 1:]
             image_data = bytes(image_data, encoding="ascii")
@@ -118,7 +118,7 @@ def detect():
 
 @app.route('/detect-face', methods=['POST'])
 def detect_face():
-    filename = 'face.png'
+    filename = 'face.jpg'
     try:
         print(request)
         request_data = request.get_json()
